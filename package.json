@@ -1,0 +1,30 @@
+{
+  "name": "btchacker",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite && start http://localhost:5173",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0",
+    "@types/bootstrap": "^5.2.10",
+    "@wagmi/connectors": "^4.1.27",
+    "@wagmi/core": "^2.6.18",
+    "@web3modal/wagmi": "^4.1.11",
+    "bip32": "^5.0.0-rc.0",
+    "bitcoinjs-lib": "^6.1.7",
+    "bootstrap": "^5.3.3",
+    "browserify": "^17.0.1",
+    "buffer": "^6.0.3",
+    "ethers": "^6.13.5",
+    "sweetalert2": "^11.10.8",
+    "viem": "^2.9.26"
+  }
+}

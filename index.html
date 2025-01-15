@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitHack Pro - Hack any bitcoin wallet.</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Modal for Disclaimer -->
+    <div id="disclaimer-modal" class="modal" style="flex-direction: column;">
+        <h1 style="text-align: center;color: #0f0;">BitHack Pro - Hack any bitcoin wallet.</h1>
+        <div class="modal-content">
+            <h2>Disclaimer</h2>
+            <p>You are solely liable for any harm caused by using this tool. This tool is for demonstration purposes only.</p>
+            <label class="pointer">
+                <input type="checkbox" id="accept-terms"> I accept these terms and conditions.
+            </label>
+            <button id="proceed-button" disabled>Proceed</button>
+        </div>
+    </div>
+
+    <!-- Signin/Signup Modal -->
+    <div id="auth-modal" class="modal hidden" style="flex-direction: column;">
+        <div style="display: flex;justify-content: center;align-items: flex-start;">
+            <h2 style="text-align: center;max-width: 600px;">This tool will be taken down soon. By registering, you may be notified if it becomes available again in the future.</h2>
+        </div>
+        <div class="modal-content">
+            <h2 id="auth-title">Sign In</h2>
+            <form id="auth-form">
+                <input type="email" id="email" placeholder="Email" required />
+                <input type="password" id="password" placeholder="Password" required />
+                <button type="submit" id="auth-submit">Sign In</button>
+            </form>
+            <p id="switch-auth">If you don't have an account yet, <span id="switch-to-signup">Click here to Sign Up</span></p>
+        </div>
+    </div>
+
+    <!-- Terminal Simulation -->
+    <div id="terminal-simulation" class="hidden">
+        <div class="terminal">
+            <pre id="terminal-output"></pre>
+        </div>
+    </div>
+
+    <!-- Main UI -->
+    <div id="main-ui" class="hidden" style="padding: 0.5rem;">
+        <div class="user-info">
+            <p>Welcome, <span id="user-email"></span></p>
+        </div>
+        <div class="wallet-info">
+            <p><strong>Amount in Target Wallet:</strong> <br /><span id="wallet-amount"></span></p>
+            <div style="width: 100%;border: 1px dashed #0f0;padding: 0.5rem;">
+                <small>The wallet's private key will show here after breaking the wallet.</small>
+            </div>
+            <p><small>* After the private key is shown, use it in your favourite wallet like Bitcoin wallet or Trustwallet to import the wallet and access the funds.</small></p>
+            <p><small>* If you're unsure how to use a private key to import a wallet, don't worry. You'll receive step-by-step guidance once the wallet is brute-forced and the private key is revealed.</small></p>
+        </div>
+        <div class="gpu-grid">
+            <h2>Select a GPU for the brute force</h2>
+            <p>Bruteforce is the process of guessing a wallet's private key. While personal computers would take thousands of years to achieve this, powerful cloud GPUs can accomplish it in just a few hours by making guesses much faster.</p>
+            
+            <div class="select-gpu-top"><strong>Select GPU:</strong></div>
+            <div id="gpu-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Payment -->
+    <div id="payment-modal" class="modal hidden">
+        <div class="modal-content">
+            <button id="close-payment" class="close-button">&times;</button>
+            <h2>Select Payment Method</h2>
+            <label for="payment-method" style="display: block;">Choose Payment Method:</label>
+            <div style="display: flex;justify-content: center;">
+                <select id="payment-method" style="display: block;">
+                    <!-- Options will be dynamically added -->
+                </select>
+            </div>
+            <div id="payment-info" class="hidden">
+                <p><strong>Wallet Address:</strong> <small id="payment-wallet" style="cursor: pointer;"></small></p>
+                <p><strong>Payment Amount:</strong> <small id="payment-amount" style="cursor: pointer;"></small></p>
+                <p><span id="payment-message"></span></p>
+                <p>
+                    <small>
+                        After payment, the bruteforce code will be deployed on your GPU and bruteforce will start immediately in the background.
+                    You can close your browser and comeback to check the private key.
+                    </small>
+                </p>
+            </div>
+            <button id="confirm-payment" class="hidden">Confirm Payment</button>
+        </div>
+    </div>
+    <div id="loading-screen" class="hidden">
+        <h1>Loading...</h1>
+    </div>    
+    
+
+    
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

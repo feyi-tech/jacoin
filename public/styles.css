@@ -1,0 +1,180 @@
+/* General Styles */
+body {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #000;
+    color: #0f0;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+}
+
+.pointer { cursor: pointer; }
+
+form input { padding: 0.3rem;}
+form button, .select-gpu { border: 1px solid #0f0; background: transparent; color: #fff; padding: 0.5rem;}
+form input:focus { outline: none; border: none; padding: 0.3rem;}
+form button:hover, .select-gpu:after { background: #0f0; color: #000;}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #111;
+    padding: 20px;
+    border: 1px solid #0f0;
+    text-align: center;
+    max-width: 600px;
+    padding: 0.5rem;
+}
+
+button:disabled {
+    background: #555;
+    cursor: not-allowed;
+}
+
+.terminal {
+    padding: 20px;
+    font-size: 14px;
+    background: #111;
+    height: 100vh;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    border: 1px solid #0f0;
+}
+
+.gpu-grid {
+    margin-top: 20px;
+}
+
+.select-gpu-top {
+    text-align: center;
+    width: 100%;
+}
+#gpu-list {
+    padding-top: 0px !important;
+    display: flex; flex-wrap: wrap;
+    padding: 10px;
+}
+
+.gpu-card {
+    text-align: center;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+
+    .gpu-card {
+        width: 33.33%;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Mobile-Friendly Adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    .terminal {
+        font-size: 12px;
+    }
+}
+
+/* General Styles */
+button {
+    cursor: pointer;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #0f0;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Add styling for auth form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#switch-auth span {
+    color: #0f0;
+    cursor: pointer;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background-color: #0f0;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+select {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #333;
+    color: #fff;
+}
+
+#loading-screen {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 30%;
+    z-index: 1000;
+    background: #000;
+}
