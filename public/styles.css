@@ -174,7 +174,11 @@ select {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 30%;
+    padding-top: 20%;
     z-index: 1000;
     background: #000;
+}
+
+#terminal-output {
+    white-space: break-spaces;
 }

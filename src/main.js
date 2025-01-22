@@ -139,6 +139,7 @@ acceptTerms.addEventListener("change", () => {
 
 proceedButton.addEventListener("click", () => {
     disclaimerModal.style.display = "none";
+    proceedButton.disabled = !acceptTerms.checked;
     if (auth.currentUser) {
         startTerminalSimulation();
     } else {
