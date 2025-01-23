@@ -72,6 +72,12 @@ button:disabled {
     text-align: center;
     width: 100%;
 }
+
+#auth-submit.disable {
+    font-style: italic;
+    opacity: 0.7;
+}
+
 #gpu-list {
     padding-top: 0px !important;
     display: flex; flex-wrap: wrap;
@@ -97,12 +103,23 @@ button:disabled {
 /* Mobile-Friendly Adjustments */
 @media (max-width: 768px) {
     .modal-content {
-        width: 90%;
+        width: 95%;
     }
 
     .terminal {
         font-size: 12px;
     }
+}
+
+#payment-wallet {
+    font-size: 11px;
+}
+
+.no-gpu-error {
+    border: 0.5px solid #f00;
+    border-left: 4px solid #f00;
+    padding: 0.5rem 0.2rem;
+    color: #f00;
 }
 
 /* General Styles */

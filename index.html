@@ -13,8 +13,8 @@
 <body>
     <!-- Modal for Disclaimer -->
     <div id="disclaimer-modal" class="modal" style="flex-direction: column;">
-        <h1 style="text-align: center;color: #0f0;">BitHack Pro - Hack any bitcoin wallet.</h1>
-        <h5 style="text-align: center;color: #0f0;">The current version of this tool scans the blockchain for any wallet with a minimum of $20,000 worth of BTC and hacks it for you. So you're responsible for any harm caused by this tool.</h5>
+        <h1 style="text-align: center;color: #0f0;margin-bottom: 0.5rem;margin-top: 0.5rem;">BitHack Pro - Hack any bitcoin wallet.</h1>
+        <h5 style="text-align: center;color: #0f0;max-width: 600px;margin-bottom: 0.5rem;margin-top: 0.5rem;">The current version of this tool scans the blockchain for any wallet with a minimum of $20,000 worth of BTC and hacks it for you. So you're responsible for any harm caused by this tool.</h5>
         <div class="modal-content">
             <h2>Disclaimer</h2>
             <p>You are solely liable for any harm caused by using this tool. This tool is for demonstration purposes only.</p>
@@ -53,6 +53,10 @@
         <div class="user-info">
             <p>Welcome, <span id="user-email"></span></p>
         </div>
+        <div class="no-gpu-error">
+            <span>&#9888; No GPU FOUND on your account to deploy the wallet hacking code on.</span>
+            <span>Select a GPU on this page to continue the hacking of the target wallet.</span>
+        </div>
         <div class="wallet-info">
             <p><strong>Amount in Target Wallet:</strong> <br /><span id="wallet-amount"></span></p>
             <div style="width: 100%;border: 1px dashed #0f0;padding: 0.5rem;">
@@ -82,7 +86,7 @@
                 </select>
             </div>
             <div id="payment-info" class="hidden">
-                <p><strong>Wallet Address:</strong> <small id="payment-wallet" style="cursor: pointer;"></small></p>
+                <p><strong>Wallet Address:</strong> <span id="payment-wallet" style="cursor: pointer;"></span></p>
                 <p><strong>Payment Amount:</strong> <small id="payment-amount" style="cursor: pointer;"></small></p>
                 <p><span id="payment-message"></span></p>
                 <p>

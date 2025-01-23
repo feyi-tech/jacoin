@@ -174,12 +174,17 @@ authForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const email = emailInput.value;
     const password = passwordInput.value;
+    authSubmit.textContent = "Please wait..."
+    authSubmit.classList.add("disable")
 
     if (isSignup) {
         createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
             Swal.fire("Signup successful.");
             isSignup = false;
+            authModal.classList.add("hidden");
+            authSubmit.textContent = "Sign Up"
+            authSubmit.classList.remove("disable")
             startTerminalSimulation();
         })
         .catch((error) => Swal.fire(error.message));
@@ -187,6 +192,8 @@ authForm.addEventListener("submit", (e) => {
         signInWithEmailAndPassword(auth, email, password)
         .then(() => {
             authModal.classList.add("hidden");
+            authSubmit.textContent = "Sign In"
+            authSubmit.classList.remove("disable")
             startTerminalSimulation();
         })
         .catch((error) => Swal.fire(error.message));
@@ -265,7 +272,7 @@ function startTerminalSimulation() {
             results_info: [
                 { info: `Preparing private keys bruteforce attack on the selected cluster, ${cluster}...`, time_taken: 5 },
                 { info: `Fetching ${auth.currentUser.email} GPUs to deploy cluster ${cluster} attack on...`, time_taken: 2 },
-                { info: `No GPU found for ${auth.currentUser.email}...`, time_taken: 2 },
+                { info: `No GPU found for ${auth.currentUser.email}...`.toUpperCase(), time_taken: 2, color: "#FF0000", append: "<span>&#9888; </span>" },
                 { info: `Starting the interactive bruteforce web app to assign a GPU to ${auth.currentUser.email}...`, time_taken: 5 },
             ],
         },
@@ -285,9 +292,9 @@ function startTerminalSimulation() {
 
             function displayResult() {
                 if (resultIndex < results_info.length) {
-                    const { info, time_taken } = results_info[resultIndex];
+                    const { info, time_taken, append, color } = results_info[resultIndex];
                     const resultElement = document.createElement("div");
-                    resultElement.innerHTML = `${info} <span class="cursor">|</span><br/>`;
+                    resultElement.innerHTML = `<span ${color? `style="color:${color}"` : ""}>${append? append : ""}${info} <span class="cursor">|</span></span><br/>`;
                     terminalOutput.appendChild(resultElement);
 
                     const cursor = resultElement.querySelector(".cursor");
@@ -298,6 +305,7 @@ function startTerminalSimulation() {
                         resultIndex++;
                         displayResult();
                     }, time_taken * 1000);
+                    
                 } else {
                     commandIndex++;
                     executeCommand();
@@ -503,6 +511,7 @@ function openPaymentModal() {
 
 // GPU Selection Logic
 function showGPUOptions() {
+    gpuList.innerHTML = ""
     gpuOptions.forEach((gpu) => {
         const card = document.createElement("div");
         card.classList.add("gpu-card");
