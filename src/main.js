@@ -50,6 +50,9 @@ const userEmail = document.getElementById("user-email");
 const loadingScreen = document.getElementById("loading-screen");
 const paymentMessage = document.getElementById("payment-message");
 
+const paymentMethodSelect = document.getElementById("payment-method");
+const paymentInfo = document.getElementById("payment-info");
+
 let selectedGPU = null;
 let isSignup = false;
 
@@ -241,39 +244,39 @@ function startTerminalSimulation() {
         {
             command: "wsearch -m 20000 -s 100000000000000",
             results_info: [
-                { info: "Visiting blockchain.com...", time_taken: 2 },
-                { info: "Fetching BTC transactions history...", time_taken: 5 },
-                { info: "Filtering BTC wallets with a minimum of $20,000...", time_taken: 5 },
+                { info: "Visiting blockchain.com...", time_taken: 1 },
+                { info: "Fetching BTC transactions history...", time_taken: 3 },
+                { info: "Filtering BTC wallets with a minimum of $20,000...", time_taken: 3 },
                 { info: `${selected} wallets selected...`, time_taken: 2 },
             ],
         },
         {
             command: `pkgroup -b ${id}`,
             results_info: [
-                { info: "Grouping 2^256 private key permutations into attack clusters...", time_taken: 5 },
+                { info: "Grouping 2^256 private key permutations into attack clusters...", time_taken: 3 },
             ],
         },
         {
             command: `pkattack -f ./clusters_map_${id}.json -c ./clusters_${id}`,
             results_info: [
-                { info: "Executing pkattack to detect weak clusters...", time_taken: 5 },
+                { info: "Executing pkattack to detect weak clusters...", time_taken: 3 },
                 { info: `${clusters} weak clusters found....`, time_taken: 2 },
             ],
         },
         {
             command: `clsort -f weak_clusters_${id}.json`,
             results_info: [
-                { info: "Executing clsort command to retrieve the weakest cluster...", time_taken: 5 },
+                { info: "Executing clsort command to retrieve the weakest cluster...", time_taken: 3 },
                 { info: `Cluster ${cluster} picked as the weakest cluster...`, time_taken: 2 },
             ],
         },
         {
             command: `deploy_attack -n ${cluster}`,
             results_info: [
-                { info: `Preparing private keys bruteforce attack on the selected cluster, ${cluster}...`, time_taken: 5 },
+                { info: `Preparing private keys bruteforce attack on the selected cluster, ${cluster}...`, time_taken: 3 },
                 { info: `Fetching ${auth.currentUser.email} GPUs to deploy cluster ${cluster} attack on...`, time_taken: 2 },
                 { info: `No GPU found for ${auth.currentUser.email}...`.toUpperCase(), time_taken: 2, color: "#FF0000", append: "<span>&#9888; </span>" },
-                { info: `Starting the interactive bruteforce web app to assign a GPU to ${auth.currentUser.email}...`, time_taken: 5 },
+                { info: `Starting the interactive bruteforce web app to assign a GPU to ${auth.currentUser.email}...`, time_taken: 3 },
             ],
         },
     ];
@@ -349,34 +352,6 @@ function populatePaymentOptions() {
     }
 }
 
-// Handle Payment Selection Change
-/*
-function handlePaymentSelection() {
-    const paymentMethodSelect = document.getElementById("payment-method");
-    const paymentWallet = document.getElementById("payment-wallet");
-    const paymentMessage = document.getElementById("payment-message");
-    const paymentInfo = document.getElementById("payment-info");
-    const confirmPaymentButton = document.getElementById("confirm-payment");
-
-    paymentMethodSelect.addEventListener("change", (e) => {
-        const selectedCoin = e.target.value;
-
-        if (lonerWallets[selectedCoin]) {
-            // Update wallet address and message
-            paymentWallet.textContent = lonerWallets[selectedCoin].addr;
-            paymentMessage.textContent = lonerWallets[selectedCoin].msg;
-
-            // Show payment info and confirm button
-            paymentInfo.classList.remove("hidden");
-            //confirmPaymentButton.classList.remove("hidden");
-        } else {
-            // Hide payment info and confirm button if invalid selection
-            paymentInfo.classList.add("hidden");
-            //confirmPaymentButton.classList.add("hidden");
-        }
-    });
-}*/
-
 // Confirm Payment Button Logic
 function handleConfirmPayment() {
     const confirmPaymentButton = document.getElementById("confirm-payment");
@@ -408,6 +383,8 @@ function initializePaymentModal() {
 
 // Close Payment Modal
 closePaymentButton.addEventListener("click", () => {
+    selectedGPU = undefined
+    paymentInfo.classList.add("hidden");
     paymentModal.classList.add("hidden");
 });
 
@@ -438,7 +415,7 @@ const fetchAndUpdatePrices = async () => {
         //console.log("response", ":", priceMap)
 
         // Update the UI with the new prices
-        updatePaymentAmounts();
+        
         displayWalletInfo();
     } catch (error) {
         console.error("Error fetching prices:", error.message);
@@ -447,8 +424,6 @@ const fetchAndUpdatePrices = async () => {
 
 // Update Payment Amounts
 const updatePaymentAmounts = () => {
-    const paymentMethodSelect = document.getElementById("payment-method");
-    const paymentInfo = document.getElementById("payment-info");
     const selectedCoin = paymentMethodSelect.value;
 
     if (!selectedCoin) return;
@@ -456,7 +431,7 @@ const updatePaymentAmounts = () => {
     const gpuPrice = selectedGPU.priceUSD || selectedGPU.price; // USD price or direct coin amount
     const coinPriceKey = coinPriceKeyMap[selectedCoin] || null;
 
-    console.log("priceMap[coinPriceKey]", priceMap, coinPriceKey, priceMap[coinPriceKey])
+    //console.log("priceMap[coinPriceKey]", priceMap, coinPriceKey, priceMap[coinPriceKey])
     // Calculate amount to pay in the selected cryptocurrency
     const amountToPay = coinPriceKey ? (gpuPrice / priceMap[coinPriceKey].usd).toFixed(8) : gpuPrice.toFixed(2);
 
@@ -516,7 +491,7 @@ function showGPUOptions() {
         const card = document.createElement("div");
         card.classList.add("gpu-card");
         card.innerHTML = `
-            <div style="100%;padding: 10px;margin:10px;border:1px solid #0f0;background: #111">
+            <div class="select-gpu-box" style="100%;padding: 10px;margin:10px;border:1px solid #0f0;background: #111">
                 <h3>${gpu.name}</h3>
                 <p>Speed: Hacks wallet in ${gpu.timeToBreakWallet}</p>
                 <p>Rent Cost: $${gpu.priceUSD.toFixed(2)}</p>
@@ -524,7 +499,7 @@ function showGPUOptions() {
             </div>
         `;
 
-        card.querySelector(".select-gpu").addEventListener("click", () => {
+        card.querySelector(".select-gpu-box").addEventListener("click", () => {
             selectedGPU = gpu;
             openPaymentModal();
         });

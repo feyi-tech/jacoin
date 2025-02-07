@@ -199,3 +199,13 @@ select {
 #terminal-output {
     white-space: break-spaces;
 }
+
+a {
+    color: #0f0;
+    text-decoration: underline;
+    font-weight: 700;
+}
+.tg-channel {
+    margin: 0.5rem 0rem;
+    display: inline-block;
+}
